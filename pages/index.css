@@ -1,3 +1,13 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
 body {
   background: black;
 }
@@ -10,6 +20,7 @@ body {
 }
 
 img {
+  max-width: 100%;
   user-select: none;
   animation-name: appear;
   animation-duration: 1s;
