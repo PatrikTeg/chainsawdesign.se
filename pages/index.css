@@ -1,0 +1,28 @@
+body {
+  background: black;
+}
+
+.Index {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  user-select: none;
+  animation-name: appear;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.74, 0.32, 0.07, 0.99);
+}
+
+@keyframes appear {
+  from {
+    transform: translateY(-100%) scale(0.5);
+    opacity: 0.5;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
