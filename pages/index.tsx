@@ -2,28 +2,8 @@ import Head from "next/head";
 
 import logo from "../images/logo.png";
 import "./index.css";
-import { withState } from "recompose";
 
-const Logo = withState("hasLoaded", "setHasLoaded", false)(
-  ({ hasLoaded, setHasLoaded }) => (
-    <img
-      className={hasLoaded ? "loaded" : ""}
-      src={logo}
-      draggable={false}
-      ref={imgRef => {
-        if (!imgRef) return;
-
-        if (imgRef.complete) {
-          if (!hasLoaded) {
-            setTimeout(() => setHasLoaded(true), 0);
-          }
-        } else {
-          imgRef.onload = () => setTimeout(() => setHasLoaded(true), 0);
-        }
-      }}
-    />
-  )
-);
+const Logo = () => <img src={logo} draggable={false} />;
 
 export default () => (
   <div className="Index">
