@@ -12,17 +12,19 @@
   "dependencies": {
     "next": "^6.1.2",
     "react": "^16.5.0",
-    "react-dom": "^16.5.0"
+    "react-dom": "^16.5.0",
+    "recompose": "^0.30.0"
   },
   "devDependencies": {
-    "next-images": "^0.10.6",
-    "@zeit/next-css": "^0.2.0",
-    "@zeit/next-typescript": "^1.1.0",
     "@types/next": "^6.1.4",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
+    "@types/recompose": "^0.26.5",
+    "@zeit/next-css": "^0.2.0",
+    "@zeit/next-typescript": "^1.1.0",
     "cssnano": "^4.1.0",
     "fork-ts-checker-webpack-plugin": "^0.4.9",
+    "next-images": "^0.10.6",
     "postcss-import": "^12.0.0",
     "postcss-preset-env": "^5.3.0",
     "typescript": "^3.0.3"
