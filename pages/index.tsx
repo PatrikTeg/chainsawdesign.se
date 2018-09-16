@@ -15,10 +15,10 @@ const Logo = withState("hasLoaded", "setHasLoaded", false)(
 
         if (imgRef.complete) {
           if (!hasLoaded) {
-            setTimeout(() => setHasLoaded(true), 100);
+            setTimeout(() => setHasLoaded(true), 0);
           }
         } else {
-          imgRef.onload = () => setTimeout(() => setHasLoaded(true), 100);
+          imgRef.onload = () => setTimeout(() => setHasLoaded(true), 0);
         }
       }}
     />

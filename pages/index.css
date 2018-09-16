@@ -22,22 +22,22 @@ body {
 img {
   max-width: 100%;
   user-select: none;
-  transform: translateY(-100%) scale(0.5);
-  opacity: 0.5;
 }
 
 img.loaded {
   animation-name: appear;
-  animation-duration: 2s;
+  animation-duration: 1.5s;
   animation-timing-function: cubic-bezier(0.74, 0.32, 0.07, 0.99);
+  animation-fill-mode: forwards;
+  transform-origin: top center;
 }
 
 @keyframes appear {
-  from {
+  0% {
     transform: translateY(-100%) scale(0.5);
     opacity: 0.5;
   }
-  to {
+  100% {
     transform: translateY(0) scale(1);
     opacity: 1;
   }
