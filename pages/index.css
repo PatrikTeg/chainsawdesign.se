@@ -73,7 +73,7 @@ body {
 }
 
 .hint {
-  font: 16px/1.5em "Permanent Marker", sans-serif;
+  font: 24px/1.5em "Permanent Marker", sans-serif;
   color: white;
   margin-top: 15px;
   animation: contactAppear 1s ease-in-out 3s forwards;
