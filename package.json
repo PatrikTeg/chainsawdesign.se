@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "fetch-instagram": "node instagram > thumbnails.json",
+    "build": "yarn fetch-instagram && next build",
     "start": "next start",
     "export": "yarn run build && next export"
   },
