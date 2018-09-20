@@ -1,9 +1,10 @@
-const withTypescript = require("@zeit/next-typescript")
+const composePlugins = require("next-compose-plugins")
+const typescript = require("@zeit/next-typescript")
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
-const withImages = require("next-images")
-const withCSS = require("@zeit/next-css")
+const images = require("next-images")
+const css = require("@zeit/next-css")
 
-const withJSONLoader = (nextConfig = {}) => {
+const json = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
     webpack(config, options) {
       const { isServer } = options
@@ -39,24 +40,30 @@ const withJSONLoader = (nextConfig = {}) => {
   })
 }
 
-module.exports = {
-  ...withCSS(
-    withJSONLoader(
-      withImages(
-        withTypescript({
-          webpack(config, options) {
-            // Do not run type checking twice:
-            if (options.isServer) config.plugins.push(new ForkTsCheckerWebpackPlugin())
-
-            return config
-          },
-        })
-      )
-    )
-  ),
+const nextConfig = {
   exportPathMap: async function(defaultPathMap) {
     return {
       "/": { page: "/" },
     }
   },
 }
+
+module.exports = composePlugins(
+  [
+    [
+      typescript,
+      {
+        webpack(config, options) {
+          // Do not run type checking twice:
+          if (options.isServer) config.plugins.push(new ForkTsCheckerWebpackPlugin())
+
+          return config
+        },
+      },
+    ],
+    [json],
+    [images],
+    [css],
+  ],
+  nextConfig
+)
