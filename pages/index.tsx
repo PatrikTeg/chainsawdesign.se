@@ -21,12 +21,12 @@ const FacebookIcon: React.SFC<{}> = () => (
 const InstagramGrid: React.SFC<{}> = (props) => (
   <div className="grid">
     {json.thumbnails.map((url, i) => (
-      <img key={i} src={url} />
+      <img draggable={false} key={i} src={url} />
     ))}
   </div>
 )
 
-export default ({ thumbnails }) => (
+export default () => (
   <div className="Index">
     <InstagramGrid />
     <div className="content">
