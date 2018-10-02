@@ -44,6 +44,9 @@ const nextConfig = {
   exportPathMap: async function(defaultPathMap) {
     return {
       "/": { page: "/" },
+      "/about": { page: "/about" },
+      "/contact": { page: "/contact" },
+      "/work/:id": { page: "/work" },
     }
   },
 }

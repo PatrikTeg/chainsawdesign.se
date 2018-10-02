@@ -11,7 +11,6 @@ export default class CustomDocument extends Document {
       <html>
         <Head>
           <title>Chainsaw Design</title>
-          <link rel="stylesheet" href="/_next/static/style.css" />
           <meta name="viewport" content="width=device-width, initial-scale=0.5" />
           <meta name="theme-color" content="#000" />
           <meta name="msapplication-navbutton-color" content="#000" />
@@ -22,6 +21,8 @@ export default class CustomDocument extends Document {
           <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png" />
           <link rel="manifest" href="/static/site.webmanifest" />
           <link rel="mask-icon" href="/static/safari-pinned-tab.svg" color="#5bbad5" />
+          <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" />
+          <link rel="stylesheet" href="/_next/static/style.css" />
         </Head>
         <body>
           <Main />

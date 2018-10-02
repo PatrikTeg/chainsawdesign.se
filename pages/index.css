@@ -1,182 +1,155 @@
-@import url("https://fonts.googleapis.com/css?family=Permanent+Marker");
+@import url("https://fonts.googleapis.com/css?family=Alfa+Slab+One|Cinzel:400,900|Crimson+Text|PT+Serif|Patua+One|Source+Serif+Pro");
 
-* {
-  box-sizing: border-box;
+:root {
+  --sidebar-width: 260px;
 }
 
 html,
 body {
   padding: 0;
   margin: 0;
-  height: 100%;
 }
 
 body {
-  background: black;
-}
-
-#__next {
-  height: 100%;
-}
-
-.Index {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.contact {
+  background: #111;
   color: white;
-  font: 32px/1.5em "Permanent Marker", sans-serif;
-  animation: contactAppear 1s ease-in-out 2s forwards;
-  opacity: 0;
+  font: 18px/1.5em "Crimson Text", serif;
 }
 
-.contact > div {
-  margin-top: 15px;
-}
-
-.contact > div a {
-  display: block;
+a {
   color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  font-family: "Cinzel", serif;
+  text-transform: uppercase;
+  font-weight: normal;
+}
+
+.Page {
   display: flex;
-  align-items: center;
-  transition: color 0.3s;
-  text-decoration: none;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin-left: var(--sidebar-width);
+  height: 100%;
 }
 
-.contact > div a:hover {
-  color: #ff892e;
-}
-
-.contact > div svg {
-  width: 48px;
-  height: 48px;
-  fill: white;
-  margin-right: 15px;
-  transition: fill 0.3s;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.contact > div a:hover svg {
-  fill: #ff892e;
-}
-
-.hint {
-  font: 24px/1.5em "Permanent Marker", sans-serif;
-  color: white;
-  margin-top: 15px;
-  animation: contactAppear 1s ease-in-out 3s forwards;
-  opacity: 0;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  pointer-events: none;
-}
-
-.grid {
+.Sidebar {
+  width: var(--sidebar-width);
+  background: #000 url("/static/sidebar.jpg") repeat;
+  padding-bottom: 20px;
+  overflow: auto;
+  position: fixed;
   top: 0;
-  right: 0;
   bottom: 0;
   left: 0;
-  position: absolute;
+  font-family: "Cinzel", serif;
+}
+
+.Sidebar .logo {
+  max-width: 100%;
+  margin-bottom: 30px;
+}
+
+.Sidebar .Links a {
+  display: block;
+  text-decoration: none;
+  margin-top: 20px;
+  font-size: 1.5rem;
+  padding: 5px 10px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.Sidebar .Links a:hover {
+  text-decoration: underline;
+}
+
+.Sidebar .divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 30px 40px 31px;
+}
+
+.Sidebar .Icons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Sidebar .Icons a.Icon {
+  text-decoration: none;
+  display: flex;
+  margin: 10px;
+  align-items: center;
+}
+
+.Sidebar .Icons a.Icon:hover {
+  text-decoration: underline;
+}
+
+.Sidebar .Icons a.Icon svg {
+  fill: white;
+  margin-right: 10px;
+  width: 32px;
+  height: 32px;
+}
+
+/* Normal page content */
+
+.Content {
+  padding: 40px;
+  overflow: auto;
+  max-width: 540px;
+}
+
+.Content img {
+  max-width: 100%;
+}
+
+/* Frontpage and artwork image grid */
+
+.Grid {
+  overflow: auto;
+  /* background: black; */
+  flex: 1;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 }
 
-@media only screen and (max-width: 960px) {
-  .grid {
-    top: 100vh;
-  }
-
-  .grid img {
-    opacity: 1 !important;
-  }
+.Grid .work {
+  position: relative;
+  display: block;
 }
 
-/* @media only screen and (max-width: 1100px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-} */
-
-.grid img {
-  width: 100%;
-  object-fit: cover;
-  opacity: 0.3;
-  transition: opacity 0.3s;
+.Grid .work .info {
+  line-height: 1em;
+  position: absolute;
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
+  padding: 20px;
+  transition: opacity 0.25s ease-in-out;
 }
 
-.grid img:hover {
+.Grid .work:hover .info {
   opacity: 1;
 }
 
-.logo {
-  pointer-events: none;
-  user-select: none;
+.Grid .work img {
   max-width: 100%;
-  animation: logoAppear 1.5s cubic-bezier(0.74, 0.32, 0.1, 0.9) 1s forwards, logoFlicker 7s linear 3.5s infinite;
-  transform: translateY(-100%) scale(0.5) rotateY(25deg);
-  opacity: 0;
-}
-
-@keyframes logoAppear {
-  0% {
-    transform: translateY(-100%) scale(0.5) rotateY(25deg);
-    opacity: 0;
-    filter: blur(5px);
-  }
-  40% {
-    transform-origin: center center;
-    transform: scale(1.5) rotateY(-25deg);
-    opacity: 1;
-    filter: blur(5px);
-  }
-  100% {
-    transform-origin: center center;
-    transform: translateY(0) scale(1) rotateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes contactAppear {
-  0% {
-    opacity: 0;
-    filter: blur(5px);
-  }
-  100% {
-    opacity: 1;
-    filter: none;
-  }
-}
-
-@keyframes logoFlicker {
-  0%,
-  19.999%,
-  22%,
-  62.999%,
-  64%,
-  64.999%,
-  70%,
-  100% {
-    filter: blur(0) contrast(100%) brightness(100%);
-    transform: scale(1) rotateZ(0);
-  }
-  20%,
-  21.999%,
-  63%,
-  63.999%,
-  65%,
-  69.999% {
-    filter: blur(1px) contrast(120%) brightness(150%);
-    transform: scale(1.05) rotateZ(-1deg);
-  }
+  object-fit: contain;
+  vertical-align: bottom;
 }
