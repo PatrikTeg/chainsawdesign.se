@@ -2,28 +2,26 @@ import { Sidebar } from "../components/sidebar"
 import Head from "next/head"
 
 type Props = {
-  item: number
+  name: string
+  image: string
 }
 
-const Work: StatelessPage<Props> = ({ item }) => (
+const Work: StatelessPage<Props> = ({ name, image }) => (
   <div className="Page Work">
     <Head>
       <title>Chainsaw Design | Work</title>
     </Head>
     <Sidebar />
     <div className="Content">
-      <h1>About {item}</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque soluta itaque, alias delectus eveniet ullam
-        accusamus, aut quaerat repellendus enim necessitatibus consectetur, repudiandae ipsa esse veniam ut
-        exercitationem! Velit, eaque.
-      </p>
+      <h1>Work {name}</h1>
+      <img src={image} />
     </div>
   </div>
 )
 
-Work.getInitialProps = async ({ pathname }) => {
-  return { item: pathname }
+Work.getInitialProps = async ({ query }) => {
+  console.log(query.data)
+  return { name: query.data.name, image: query.data.images[0].source }
 }
 
 export default Work

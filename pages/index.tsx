@@ -4,27 +4,38 @@ import { Sidebar } from "../components/sidebar"
 import Head from "next/head"
 import Link from "next/link"
 
-const works = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+type Props = {
+  works: any[]
+}
 
-const Grid: React.SFC<{}> = () => (
+const Grid: React.SFC<Props> = ({ works }) => (
   <div className="Grid">
-    {works.map((i) => (
-      <Link href="/work" key={i}>
-        <a className="work">
-          <img src={require("../images/artwork/work" + i + ".jpg")} />
-          <div className="info">Work {i}</div>
-        </a>
-      </Link>
-    ))}
+    {works &&
+      works.map((work, i) => (
+        <Link href={"/work/" + work.id} key={work.id}>
+          <a className="work">
+            <img src={work.images[0].source} />
+            <div className="info">{work.name}</div>
+          </a>
+        </Link>
+      ))}
   </div>
 )
 
-export default () => (
+const Index: StatelessPage<Props> = ({ works }) => (
   <div className="Page Index">
     <Head>
       <title>Chainsaw Design</title>
     </Head>
     <Sidebar />
-    <Grid />
+    <Grid works={works} />
   </div>
 )
+
+Index.getInitialProps = async ({ query }) => {
+  console.log("tratt")
+  console.log(query)
+  return { works: query.data }
+}
+
+export default Index

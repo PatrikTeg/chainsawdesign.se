@@ -3,6 +3,8 @@ const typescript = require("@zeit/next-typescript")
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
 const images = require("next-images")
 const css = require("@zeit/next-css")
+const works = require("./works.js")
+const fetch = require("node-fetch")
 
 const json = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
@@ -42,11 +44,25 @@ const json = (nextConfig = {}) => {
 
 const nextConfig = {
   exportPathMap: async function(defaultPathMap) {
+    const res = await fetch(
+      "https://graph.facebook.com/v3.1/1487195318248243/photos?fields=name%2Cimages&access_token=" +
+        process.env.FACEBOOK_ACCESS_TOKEN
+    ).then((res) => res.json())
+
+    const works = res.data.reduce(
+      (acc, albumPhoto) => ({ ...acc, ["/work/" + albumPhoto.id]: { page: "/work", query: { data: albumPhoto } } }),
+      {
+        "/work": { page: "/work" },
+      }
+    )
+
+    console.log(res.data)
+
     return {
-      "/": { page: "/" },
+      "/": { page: "/", query: { data: res.data } },
       "/about": { page: "/about" },
       "/contact": { page: "/contact" },
-      "/work/:id": { page: "/work" },
+      ...works,
     }
   },
 }
