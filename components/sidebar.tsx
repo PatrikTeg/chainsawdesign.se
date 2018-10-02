@@ -5,36 +5,20 @@ import { InstagramIcon, FacebookIcon } from "./icons"
 
 export const Sidebar: React.SFC<{}> = () => (
   <div className="Sidebar">
-    <Link href="/">
-      <a>
-        <img className="logo" src={logo} />
-      </a>
-    </Link>
+    <a href="/">
+      <img className="logo" src={logo} />
+    </a>
     <div className="Links">
-      <Link href="/">
-        <a>Logotypes</a>
-      </Link>
-      <Link href="/">
-        <a>Album covers</a>
-      </Link>
-      <Link href="/">
-        <a>Merch designs</a>
-      </Link>
-      <Link href="/">
-        <a>Miscellaneous</a>
-      </Link>
-      <Link href="/">
-        <a>Art for sale</a>
-      </Link>
+      <a href="/">Logotypes</a>
+      <a href="/">Album covers</a>
+      <a href="/">Merch designs</a>
+      <a href="/">Miscellaneous</a>
+      <a href="/">Art for sale</a>
     </div>
     <div className="divider" />
     <div className="Links">
-      <Link href="/contact">
-        <a>Contact</a>
-      </Link>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
+      <a href="/contact">Contact</a>
+      <a href="/about">About</a>
     </div>
     <div className="divider" />
     <div className="Icons">

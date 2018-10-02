@@ -2,7 +2,6 @@ import "./index.css"
 import * as React from "react"
 import { Sidebar } from "../components/sidebar"
 import Head from "next/head"
-import Link from "next/link"
 
 type Props = {
   works: any[]
@@ -12,12 +11,10 @@ const Grid: React.SFC<Props> = ({ works }) => (
   <div className="Grid">
     {works &&
       works.map((work, i) => (
-        <Link href={"/work/" + work.id} key={work.id}>
-          <a className="work">
-            <img src={work.images[0].source} />
-            <div className="info">{work.name}</div>
-          </a>
-        </Link>
+        <a className="work" href={"/work/" + work.id} key={work.id}>
+          <img src={work.images[0].source} />
+          <div className="info">{work.name}</div>
+        </a>
       ))}
   </div>
 )
