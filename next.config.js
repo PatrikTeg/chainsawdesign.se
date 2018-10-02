@@ -50,9 +50,7 @@ const nextConfig = {
 
     const works = res.data.reduce(
       (acc, albumPhoto) => ({ ...acc, ["/work/" + albumPhoto.id]: { page: "/work", query: { data: albumPhoto } } }),
-      {
-        "/work": { page: "/work" },
-      }
+      {}
     )
 
     console.log(res.data)
