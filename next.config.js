@@ -3,7 +3,6 @@ const typescript = require("@zeit/next-typescript")
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
 const images = require("next-images")
 const css = require("@zeit/next-css")
-const works = require("./works.js")
 const fetch = require("node-fetch")
 
 const json = (nextConfig = {}) => {
