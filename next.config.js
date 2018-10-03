@@ -7,42 +7,6 @@ const fetch = require("node-fetch")
 
 require("dotenv").config()
 
-const json = (nextConfig = {}) => {
-  return Object.assign({}, nextConfig, {
-    webpack(config, options) {
-      const { isServer } = options
-      if (!options.defaultLoaders) {
-        throw new Error(
-          "This plugin is not compatible with Next.js versions below 5.0.0 https://err.sh/next-plugins/upgrade"
-        )
-      }
-
-      const assetPrefix = nextConfig.assetPrefix || ""
-
-      config.module.rules.push({
-        test: /\.json$/,
-        use: [
-          {
-            loader: "json-loader",
-            options: {
-              fallback: "file-loader",
-              publicPath: `${assetPrefix}/_next/static/`,
-              outputPath: `${isServer ? "../" : ""}static/`,
-              name: "[name]-[hash].[ext]",
-            },
-          },
-        ],
-      })
-
-      if (typeof nextConfig.webpack === "function") {
-        return nextConfig.webpack(config, options)
-      }
-
-      return config
-    },
-  })
-}
-
 const nextConfig = {
   exportPathMap: async function(defaultPathMap) {
     const res = await fetch(
@@ -55,7 +19,7 @@ const nextConfig = {
       {}
     )
 
-    console.log(res.data)
+    // console.log(res.data)
 
     return {
       "/": { page: "/", query: { data: res.data } },
@@ -79,7 +43,6 @@ module.exports = composePlugins(
         },
       },
     ],
-    [json],
     [images],
     [css],
   ],
