@@ -5,6 +5,8 @@ const images = require("next-images")
 const css = require("@zeit/next-css")
 const fetch = require("node-fetch")
 
+require("dotenv").config()
+
 const json = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
     webpack(config, options) {

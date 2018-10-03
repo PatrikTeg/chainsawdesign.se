@@ -26,6 +26,7 @@
     "@zeit/next-css": "^0.2.0",
     "@zeit/next-typescript": "^1.1.0",
     "cssnano": "^4.1.0",
+    "dotenv": "^6.0.0",
     "fork-ts-checker-webpack-plugin": "^0.4.9",
     "json-loader": "^0.5.7",
     "next-compose-plugins": "^2.1.1",
