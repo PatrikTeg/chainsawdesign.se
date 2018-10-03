@@ -1,31 +1,51 @@
+//@ts-check
 const composePlugins = require("next-compose-plugins")
 const typescript = require("@zeit/next-typescript")
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
-const images = require("next-images")
 const css = require("@zeit/next-css")
-const fetch = require("node-fetch")
-
-require("dotenv").config()
+const fetchAlbums = require("./facebook")
+const albumsMap = require("./albums")
 
 const nextConfig = {
   exportPathMap: async function(defaultPathMap) {
-    const res = await fetch(
-      "https://graph.facebook.com/v3.1/1487195318248243/photos?fields=name%2Cimages&access_token=" +
-        process.env.FACEBOOK_ACCESS_TOKEN
-    ).then((res) => res.json())
+    function albumIds(albumsMap) {
+      return Object.keys(albumsMap).map((key) => albumsMap[key].id)
+    }
 
-    const works = res.data.reduce(
-      (acc, albumPhoto) => ({ ...acc, ["/work/" + albumPhoto.id]: { page: "/work", query: { data: albumPhoto } } }),
+    function albumKey(albumId) {
+      return Object.keys(albumsMap).find((key) => albumsMap[key].id === albumId)
+    }
+
+    const { albums, images } = await fetchAlbums(albumIds(albumsMap))
+
+    const artworksPathMap = images.reduce(
+      (prev, image) => ({
+        ...prev,
+        ["/artwork/" + albumKey(image.albumId) + "/" + image.id]: {
+          page: "/artwork",
+          query: { image, album: albumsMap[image.albumId] },
+        },
+      }),
       {}
     )
 
-    // console.log(res.data)
+    const albumsPathMap = Object.keys(albumsMap).reduce(
+      (prev, key) => ({
+        ...prev,
+        ["/artwork/" + key]: {
+          page: "/album",
+          query: { images: albums[albumsMap[key].id], name: albumsMap[key].name, key },
+        },
+      }),
+      {}
+    )
 
     return {
-      "/": { page: "/", query: { data: res.data } },
+      "/": { page: "/", query: { albums } },
       "/about": { page: "/about" },
       "/contact": { page: "/contact" },
-      ...works,
+      ...artworksPathMap,
+      ...albumsPathMap,
     }
   },
 }
@@ -43,7 +63,6 @@ module.exports = composePlugins(
         },
       },
     ],
-    [images],
     [css],
   ],
   nextConfig

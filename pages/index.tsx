@@ -1,38 +1,33 @@
-import "./index.css"
 import * as React from "react"
 import { Sidebar } from "../components/sidebar"
 import Head from "next/head"
+import { Grid } from "../components/grid"
 
-type Props = {
-  works: any[]
+import "./style.css"
+
+export type Image = {
+  id: number
+  description: string
+  src: string
+  albumId: number
 }
 
-const Grid: React.SFC<Props> = ({ works }) => (
-  <div className="Grid">
-    {works &&
-      works.map((work, i) => (
-        <a className="work" href={"/work/" + work.id} key={work.id}>
-          <img src={work.images[0].source} />
-          <div className="info">{work.name}</div>
-        </a>
-      ))}
-  </div>
-)
+type Props = {
+  albums: Record<number, Image[]>
+}
 
-const Index: StatelessPage<Props> = ({ works }) => (
+const Index: StatelessPage<Props> = ({ albums }) => (
   <div className="Page Index">
     <Head>
       <title>Chainsaw Design</title>
     </Head>
     <Sidebar />
-    <Grid works={works} />
+    <Grid images={albums[1487195318248243]} />
   </div>
 )
 
-Index.getInitialProps = async ({ query }) => {
-  console.log("tratt")
-  console.log(query)
-  return { works: query.data }
+Index.getInitialProps = async ({ query: { albums } }) => {
+  return { albums }
 }
 
 export default Index

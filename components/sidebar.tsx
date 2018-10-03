@@ -1,24 +1,23 @@
-import logo from "../images/logo.png"
-
-import Link from "next/link"
 import { InstagramIcon, FacebookIcon } from "./icons"
+import * as albumsMap from "../albums"
+import { AlbumLink, ActiveLink } from "./ActiveLink"
 
 export const Sidebar: React.SFC<{}> = () => (
   <div className="Sidebar">
     <a href="/">
-      <img className="logo" src={logo} />
+      <img className="logo" src="/static/logo.png" />
     </a>
     <div className="Links">
-      <a href="/">Logotypes</a>
-      <a href="/">Album covers</a>
-      <a href="/">Merch designs</a>
-      <a href="/">Miscellaneous</a>
-      <a href="/">Art for sale</a>
+      {Object.keys(albumsMap).map((key) => (
+        <AlbumLink href={"/artwork/" + key} key={key}>
+          {albumsMap[key].name}
+        </AlbumLink>
+      ))}
     </div>
     <div className="divider" />
     <div className="Links">
-      <a href="/contact">Contact</a>
-      <a href="/about">About</a>
+      <ActiveLink href="/contact">Contact</ActiveLink>
+      <ActiveLink href="/about">About</ActiveLink>
     </div>
     <div className="divider" />
     <div className="Icons">
