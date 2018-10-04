@@ -16,36 +16,50 @@ const nextConfig = {
       return Object.keys(albumsMap).find((key) => albumsMap[key].id === albumId)
     }
 
-    const { albums, images } = await fetchAlbums(albumIds(albumsMap))
+    async function generatePaths() {
+      try {
+        const { albums, images } = await fetchAlbums(albumIds(albumsMap))
 
-    const artworksPathMap = images.reduce(
-      (prev, image) => ({
-        ...prev,
-        ["/artwork/" + albumKey(image.albumId) + "/" + image.id]: {
-          page: "/artwork",
-          query: { image, album: albumsMap[image.albumId] },
-        },
-      }),
-      {}
-    )
+        const artworksPathMap = images.reduce(
+          (prev, image) => ({
+            ...prev,
+            ["/artwork/" + albumKey(image.albumId) + "/" + image.id]: {
+              page: "/artwork",
+              query: { image, album: albumsMap[image.albumId] },
+            },
+          }),
+          {}
+        )
 
-    const albumsPathMap = Object.keys(albumsMap).reduce(
-      (prev, key) => ({
-        ...prev,
-        ["/artwork/" + key]: {
-          page: "/album",
-          query: { images: albums[albumsMap[key].id], name: albumsMap[key].name, key },
-        },
-      }),
-      {}
-    )
+        const albumsPathMap = Object.keys(albumsMap).reduce(
+          (prev, key) => ({
+            ...prev,
+            ["/artwork/" + key]: {
+              page: "/album",
+              query: { images: albums[albumsMap[key].id], name: albumsMap[key].name, key },
+            },
+          }),
+          {}
+        )
+
+        return {
+          "/": { page: "/", query: { albums } },
+          ...artworksPathMap,
+          ...albumsPathMap,
+        }
+      } catch (e) {
+        console.error(e)
+        return {}
+      }
+    }
+
+    const generatedPaths = await generatePaths()
 
     return {
-      "/": { page: "/", query: { albums } },
+      "/": { page: "/", query: { albums: {} } }, // Default is empty object
       "/about": { page: "/about" },
       "/contact": { page: "/contact" },
-      ...artworksPathMap,
-      ...albumsPathMap,
+      ...generatedPaths,
     }
   },
 }

@@ -10,25 +10,47 @@ async function fetchAlbums(ids) {
   }
 
   function constructMap(albums) {
-    return albums.reduce((prev, { id, res }) => ({ ...prev, [id]: mapImages(id, res.data) }), {})
+    return albums.reduce((prev, { id, images }) => ({ ...prev, [id]: mapImages(id, images) }), {})
   }
 
   function allImages(albums) {
-    return albums.reduce((prev, { id, res }) => [...prev, ...mapImages(id, res.data)], [])
+    return albums.reduce((prev, { id, images }) => [...prev, ...mapImages(id, images)], [])
   }
 
-  return Promise.all(
-    ids.map(
-      (id) =>
-        new Promise((resolve, reject) =>
-          FB.api(
-            id + "/photos",
-            { fields: "name,source" },
-            (res) => (!res || res.error ? reject({ id, res }) : resolve({ id, res }))
-          )
-        )
+  function fetchFB(id, after = undefined) {
+    return new Promise((resolve, reject) =>
+      FB.api(id + "/photos", { fields: "name,source", after }, (res) => {
+        if (!res || res.error) {
+          return reject((res && res.error) || null)
+        }
+
+        return resolve(res)
+      })
     )
-  ).then((albums) => ({
+  }
+
+  async function fetch(id) {
+    let images = []
+    let after = undefined
+
+    while (true) {
+      let res = await fetchFB(id, after)
+
+      if (res.data && res.data.length === 0) {
+        break
+      }
+
+      images = images.concat(res.data)
+
+      if (res.paging && res.paging.cursors && res.paging.cursors.after) {
+        after = res.paging.cursors.after
+      }
+    }
+
+    return { id, images }
+  }
+
+  return Promise.all(ids.map((id) => fetch(id))).then((albums) => ({
     albums: constructMap(albums),
     images: allImages(albums),
   }))

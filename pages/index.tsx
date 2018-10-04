@@ -22,7 +22,7 @@ const Index: StatelessPage<Props> = ({ albums }) => (
       <title>Chainsaw Design</title>
     </Head>
     <Sidebar />
-    <Grid images={albums[1487195318248243]} />
+    <Grid images={albums[1487195318248243] || []} />
   </div>
 )
 
